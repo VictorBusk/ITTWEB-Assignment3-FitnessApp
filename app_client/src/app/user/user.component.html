@@ -1,0 +1,46 @@
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th>User</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users"
+      (click)="onSelect(user)"
+      [class.success]="user === selectedUser">
+    <td>
+      {{user.name}}
+    </td>
+    <td>
+      <button class="btn btn-default btn-sm pull-right"
+              (click)="onSelect(user);">Workouts</button>
+      <button class="btn btn-link btn-sm pull-right"
+              (click)="remove(user); $event.stopPropagation()">Delete</button>
+      <button class="btn btn-link btn-sm pull-right"
+              (click)="onEdit(user);">Edit</button>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td>
+      <input #userName placeholder="New user"/>
+    </td>
+    <td>
+      <button class="btn btn-success btn-sm pull-right"
+              (click)="add(
+                  userName.value);
+                userName.value=''">Add user</button>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<div *ngIf="selectedUser">
+  <h2>{{selectedUser.name}}</h2>
+  <app-workout [userId]="selectedUser._id"></app-workout>
+</div>
+
+
+

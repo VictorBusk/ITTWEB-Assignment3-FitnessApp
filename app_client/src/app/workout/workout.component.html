@@ -1,0 +1,52 @@
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Workout</th>
+    <th>Description</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let workout of workouts"
+        [class.success]="workout === selectedWorkout">
+      <td>
+          {{workout.name}}
+      </td>
+      <td>
+          {{workout.description}}
+      </td>
+      <td>
+        <button class="btn btn-default btn-sm pull-right"
+                (click)="onSelect(workout);">Exercises</button>
+        <button class="btn btn-link btn-sm pull-right"
+                (click)="remove(workout); $event.stopPropagation()">Delete
+        </button>
+        <button class="btn btn-link btn-sm pull-right"
+                (click)="onEdit(workout);">Edit</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        <input #workoutName placeholder="New workout"/>
+      </td>
+      <td>
+        <input #workoutDescription placeholder="description"/>
+      </td>
+      <td>
+        <button class="btn btn-success btn-sm pull-right"
+                (click)="
+                add(
+                  workoutName.value,
+                  workoutDescription.value);
+                workoutName.value='';
+                workoutDescription.value=''">Add workout</button>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<div *ngIf="selectedWorkout">
+  <app-exercise [userId]="userId" [workoutId]="selectedWorkout._id"></app-exercise>
+</div>

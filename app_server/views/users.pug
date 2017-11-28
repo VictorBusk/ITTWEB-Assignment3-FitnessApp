@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    ul.breadcrumb
+        li
+            a(href="/") Home
+        li.active= title
+
+    if errors
+        div.alert.alert-dismissible.alert-danger
+            ul
+                for error in errors
+                    li!= error.msg
+
+    div.bs-docs-section
+        div.row
+            div.col-lg-12
+                div.page-header
+                    h1#typography= title
+                div.bs-component
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                                th Name
+                                th
+                        tbody
+                            for object in users
+                                tr
+                                    td= object.name
+                                    td
+                                        div.btn-group.btn-sm
+                                            a.btn.btn-primary.btn-sm(href="/users/" + object._id + "/workouts")= 'Workouts '
+                                                span.badge= object.workouts.length
+                                        div.btn-group.btn-sm
+                                            a.btn.btn-danger.btn-sm(href="/users/" + object._id + "remove") Delete
+                            form.form-inline(method='POST' action='/users/create')
+                                tr
+                                    td
+                                        input#name.form-control(type='text', placeholder='Name' name='name' required='true' value=(undefined === user ? '' : user.name) )
+                                    td
+                                        div.btn-group.btn-sm
+                                            button.btn.btn-success.btn-sm(type='submit') Add user

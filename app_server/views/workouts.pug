@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    ul.breadcrumb
+        li
+            a(href="/") Home
+        li
+            a(href="/users") Users
+        li.active= title
+
+    if errors
+        div.alert.alert-dismissible.alert-danger
+            ul
+                for error in errors
+                    li!= error.msg
+
+    div.bs-docs-section
+        div.row
+            div.col-lg-12
+                div.page-header
+                    h1#typography= title
+                div.bs-component
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                                th Name
+                                th Description
+                                th
+                        tbody
+                            for object in workouts
+                                tr
+                                    td= object.name
+                                    td= object.description
+                                    td
+                                        div.btn-group.btn-sm
+                                            a.btn.btn-primary.btn-sm(href="/users/" + userId + "/workouts/" + object._id + "/exercises" )= 'Exercises '
+                                                span.badge= object.exercises.length
+                                        div.btn-group.btn-sm
+                                            a.btn.btn-danger.btn-sm(href="/users/" + userId + "/workouts/" + object._id + "/remove" ) Delete
+                            form.form-inline(method='POST' action='/users/' + userId + '/workouts/create')
+                                tr
+                                    td
+                                        input#name.form-control(type='text', placeholder='Name' name='name' required='true' value=(undefined === workout ? '' : workout.name) )
+                                    td
+                                        input#description.form-control(type='text', placeholder='Description' name='description' required='true' value=(undefined === workout ? '' : workout.description) )
+                                    td
+                                        div.btn-group.btn-sm
+                                            button.btn.btn-success.btn-sm(type='submit') Add workout

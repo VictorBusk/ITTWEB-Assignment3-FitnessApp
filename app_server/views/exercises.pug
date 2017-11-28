@@ -1,0 +1,55 @@
+extends layout
+
+block content
+    ul.breadcrumb
+        li
+            a(href="/") Home
+        li
+            a(href="/users") Users
+        li
+            a(href="/users/" + userId + "/workouts") Workouts
+        li.active= title
+
+    if errors
+        div.alert.alert-dismissible.alert-danger
+            ul
+                for error in errors
+                    li!= error.msg
+
+    div.bs-docs-section
+        div.row
+            div.col-lg-12
+                div.page-header
+                    h1#typography= title
+                div.bs-component
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                                th Name
+                                th Description
+                                th Sets
+                                th Reps/Time
+                                th
+                        tbody
+                            for object in exercises
+                                tr
+                                    td= object.name
+                                    td= object.description
+                                    td= object.sets
+                                    td= object.reps_time
+                                    td
+                                        div.btn-group.btn-sm
+                                            a.btn.btn-danger.btn-sm(href="/users/" + userId + "/workouts/" + workoutId + "/exercises/" + object._id + "/remove") Delete
+                            form.form-inline(method='POST' action='/users/' + userId + '/workouts/' + workoutId + '/exercises/create')
+                                tr
+                                    td
+                                        input#name.form-control(type='text', placeholder='Name' name='name' required='true' value=(undefined === exercise ? '' : exercise.name) )
+                                    td
+                                        input#description.form-control(type='text', placeholder='Description' name='description' required='true' value=(undefined === exercise ? '' : exercise.description) )
+                                    td
+                                        input#sets.form-control(type='text', placeholder='Sets' name='sets' required='true' value=(undefined === exercise ? '' : exercise.sets) )
+                                    td
+                                        input#reps_time.form-control(type='text', placeholder='Reps/Time' name='reps_time' required='true' value=(undefined === exercise ? '' : exercise.reps_time) )
+                                    td
+                                        div.btn-group.btn-sm
+                                            button.btn.btn-success.btn-sm(type='submit') Add exercise
