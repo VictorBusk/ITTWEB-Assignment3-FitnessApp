@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let dbUrl = "mongodb://127.0.0.1:27017/gruppe7";
+let dbUrl = "mongodb://127.0.0.1:27017/gruppe7web3";
 if (process.env.NODE_ENV === 'production') {
     if (process.env.MONGODB_URI) {
         console.log('Using env.MONGODB_URI as db url');
