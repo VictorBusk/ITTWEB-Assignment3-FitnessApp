@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://gruppe7.dk/api'
+  apiUrl: 'https://ittweb3.herokuapp.com/api'
 };
